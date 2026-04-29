@@ -1,0 +1,1 @@
+UPDATE esim_packages SET network_type = '4G/5G' WHERE country_name = 'New Zealand' AND is_active = true AND network_type = '4G';

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- ─── Associated Domains (Universal Links) ─────────────────── -->
+    <key>com.apple.developer.associated-domains</key>
+    <array>
+        <string>applinks:mobile11.com</string>
+        <string>webcredentials:mobile11.com</string>
+    </array>
+
+    <!-- ─── Apple Pay ────────────────────────────────────────────── -->
+    <key>com.apple.developer.in-app-payments</key>
+    <array>
+        <string>merchant.com.mobile11.app</string>
+    </array>
+
+    <!-- ─── Push Notifications ───────────────────────────────────── -->
+    <key>aps-environment</key>
+    <string>production</string>
+
+    <!-- ─── Keychain Sharing (for biometric token storage) ───────── -->
+    <key>keychain-access-groups</key>
+    <array>
+        <string>$(AppIdentifierPrefix)com.mobile11.app</string>
+    </array>
+</dict>
+</plist>

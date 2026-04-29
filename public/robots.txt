@@ -1,0 +1,62 @@
+# https://www.robotstxt.org/robotstxt.html
+# Mobile11 eSIM - Robots.txt
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: *
+Allow: /
+
+# Sitemap (dynamically generated from database)
+Sitemap: https://jaqyvbjllsanrnpzlyjw.supabase.co/functions/v1/generate-sitemap
+
+# Allow important pages
+Allow: /packages
+Allow: /what-is-esim
+Allow: /thailand-local
+Allow: /about
+Allow: /support
+Allow: /business
+Allow: /affiliate
+Allow: /privacy-policy
+Allow: /terms-of-service
+Allow: /refund-policy
+Allow: /esim/
+Allow: /how-it-works
+Allow: /installation-guide
+Allow: /guide
+Allow: /contact
+Allow: /data-deletion
+Allow: /how-renewals-work
+Allow: /blog/
+Allow: /th/
+
+# Disallow admin, auth, and internal pages
+Disallow: /admin
+Disallow: /auth
+Disallow: /auth-callback
+Disallow: /reset-password
+Disallow: /affiliate/dashboard
+Disallow: /settings
+Disallow: /orders
+Disallow: /tickets
+Disallow: /create-order
+Disallow: /payment-success
+Disallow: /payment-canceled
+Disallow: /esim-v2/
+Disallow: /esim-v3/
+Disallow: /esim-v4/
+Disallow: /import-
+Disallow: /agent
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

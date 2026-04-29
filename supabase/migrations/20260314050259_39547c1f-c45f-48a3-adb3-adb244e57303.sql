@@ -1,0 +1,1 @@
+UPDATE kb_articles SET content = REPLACE(content, 'SG2026', 'SK2026'), updated_at = now() WHERE id = '9cd6e7de-15e8-4dc9-a141-41843d584486';

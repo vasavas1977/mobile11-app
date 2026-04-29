@@ -1,0 +1,216 @@
+/* Theme V2 - Airalo-Inspired Warm Design System */
+/* Scoped to .theme-v2 class to avoid affecting existing site */
+
+.theme-v2 {
+  /* Warm Beige Backgrounds */
+  --v2-bg-primary: 35 33% 96%;        /* #FAF7F2 cream */
+  --v2-bg-secondary: 35 27% 93%;      /* #F5EFE6 beige */
+  --v2-bg-warm: 30 40% 94%;           /* Slightly warmer */
+  
+  /* Orange Accent (Primary for V2) */
+  --v2-orange: 25 95% 53%;            /* #F97316 vibrant orange */
+  --v2-orange-dark: 21 90% 48%;       /* #EA580C darker orange */
+  --v2-orange-light: 27 96% 61%;      /* Lighter orange */
+  
+  /* Soft Pastels for decorations */
+  --v2-mint: 156 72% 80%;             /* #A7F3D0 soft mint */
+  --v2-mint-dark: 158 64% 52%;        /* Darker mint */
+  --v2-sky: 199 95% 84%;              /* #BAE6FD soft sky blue */
+  --v2-sky-dark: 199 89% 70%;         /* Darker sky */
+  --v2-peach: 30 100% 72%;            /* #FDBA74 soft peach */
+  --v2-green: 142 76% 45%;            /* #22C55E vibrant green */
+  --v2-green-light: 142 69% 58%;      /* Lighter green */
+  
+  /* Text colors */
+  --v2-text-dark: 20 14% 10%;         /* #1C1917 near black */
+  --v2-text-muted: 20 6% 45%;         /* Muted text */
+  --v2-text-light: 0 0% 100%;         /* White text */
+  
+  /* Card and surfaces */
+  --v2-card: 0 0% 100%;               /* Pure white */
+  --v2-card-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --v2-card-shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
+  
+  /* Border */
+  --v2-border: 30 20% 90%;
+  --v2-border-light: 30 15% 94%;
+}
+
+/* V2 Background Base */
+.theme-v2 {
+  background-color: hsl(var(--v2-bg-primary));
+  color: hsl(var(--v2-text-dark));
+}
+
+/* V2 Animations */
+@keyframes v2-float-slow {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-15px) rotate(3deg); 
+  }
+}
+
+@keyframes v2-float-medium {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-10px) rotate(-2deg); 
+  }
+}
+
+@keyframes v2-float-fast {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-8px) rotate(1deg); 
+  }
+}
+
+@keyframes v2-pulse-soft {
+  0%, 100% { 
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes v2-slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes v2-slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes v2-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.theme-v2 .animate-v2-float-slow {
+  animation: v2-float-slow 6s ease-in-out infinite;
+}
+
+.theme-v2 .animate-v2-float-medium {
+  animation: v2-float-medium 4s ease-in-out infinite;
+}
+
+.theme-v2 .animate-v2-float-fast {
+  animation: v2-float-fast 3s ease-in-out infinite;
+}
+
+.theme-v2 .animate-v2-pulse-soft {
+  animation: v2-pulse-soft 3s ease-in-out infinite;
+}
+
+.theme-v2 .animate-v2-slide-right {
+  animation: v2-slide-in-right 0.6s ease-out forwards;
+}
+
+.theme-v2 .animate-v2-slide-left {
+  animation: v2-slide-in-left 0.6s ease-out forwards;
+}
+
+.theme-v2 .animate-v2-fade-up {
+  animation: v2-fade-up 0.5s ease-out forwards;
+}
+
+/* V2 Button Styles */
+.theme-v2 .btn-v2-primary {
+  background-color: hsl(var(--v2-orange));
+  color: hsl(var(--v2-text-light));
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.theme-v2 .btn-v2-primary:hover {
+  background-color: hsl(var(--v2-orange-dark));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px hsl(var(--v2-orange) / 0.3);
+}
+
+.theme-v2 .btn-v2-outline {
+  background-color: transparent;
+  color: hsl(var(--v2-text-dark));
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 2px solid hsl(var(--v2-text-dark) / 0.2);
+  cursor: pointer;
+}
+
+.theme-v2 .btn-v2-outline:hover {
+  border-color: hsl(var(--v2-orange));
+  color: hsl(var(--v2-orange));
+  background-color: hsl(var(--v2-orange) / 0.05);
+}
+
+/* V2 Card Styles */
+.theme-v2 .card-v2 {
+  background-color: hsl(var(--v2-card));
+  border-radius: 1rem;
+  box-shadow: var(--v2-card-shadow);
+  transition: all 0.3s ease;
+}
+
+.theme-v2 .card-v2:hover {
+  box-shadow: var(--v2-card-shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Decorative shape base styles */
+.theme-v2 .decoration-diamond {
+  width: 2rem;
+  height: 2rem;
+  transform: rotate(45deg);
+  border-radius: 0.25rem;
+}
+
+.theme-v2 .decoration-circle {
+  border-radius: 9999px;
+}
+
+/* Section backgrounds */
+.theme-v2 .section-sky {
+  background-color: hsl(var(--v2-sky));
+}
+
+.theme-v2 .section-green {
+  background-color: hsl(var(--v2-green));
+}
+
+.theme-v2 .section-mint {
+  background-color: hsl(var(--v2-mint));
+}

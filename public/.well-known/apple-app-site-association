@@ -1,0 +1,19 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAM_ID.com.mobile11.app",
+        "paths": [
+          "/app/*",
+          "/payment-success*"
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "TEAM_ID.com.mobile11.app"
+    ]
+  }
+}

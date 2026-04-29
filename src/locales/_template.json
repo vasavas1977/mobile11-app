@@ -1,0 +1,27 @@
+{
+  "_instructions": "Copy this file as your new locale. Replace all [TRANSLATE] values with translations. Keep keys unchanged.",
+  "header": {
+    "search": "[TRANSLATE] Search for eSIM in 151 countries...",
+    "whatIsEsim": "[TRANSLATE] What is eSIM",
+    "forBusiness": "[TRANSLATE] For Business",
+    "about": "[TRANSLATE] About mobile11",
+    "aboutUs": "[TRANSLATE] About Us",
+    "support": "[TRANSLATE] Support & FAQ",
+    "shopPlans": "[TRANSLATE] Shop Plans",
+    "myMobile": "[TRANSLATE] My Order",
+    "myEsims": "[TRANSLATE] My eSIMs",
+    "signOut": "[TRANSLATE] Log out",
+    "signIn": "[TRANSLATE] Log in",
+    "signUp": "[TRANSLATE] Sign up",
+    "home": "[TRANSLATE] Home",
+    "esimStore": "[TRANSLATE] eSIM Store",
+    "howItWorks": "[TRANSLATE] How It Works",
+    "help": "[TRANSLATE] Help",
+    "searchPlaceholder": "[TRANSLATE] Where do you need an eSIM?",
+    "locations": "[TRANSLATE] Locations",
+    "popularLocations": "[TRANSLATE] Popular locations",
+    "regionalGlobal": "[TRANSLATE] Regional and global eSIMs",
+    "exploreStore": "[TRANSLATE] Explore eSIM Store"
+  },
+  "_note": "This is a starter template. Copy the full en.json structure and replace values for a complete translation."
+}

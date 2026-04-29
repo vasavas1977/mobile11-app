@@ -1,0 +1,1 @@
+UPDATE esim_packages SET is_active = true, updated_at = now() WHERE country_name IN ('Israel', 'Mongolia', 'Maldives');

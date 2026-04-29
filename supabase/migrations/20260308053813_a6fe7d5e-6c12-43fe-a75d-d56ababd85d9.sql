@@ -1,0 +1,1 @@
+UPDATE esim_packages SET is_active = false WHERE country_name = 'South Korea' AND package_type = 'limitless' AND provider_id = (SELECT id FROM esim_providers WHERE provider_code = 'tuge') AND carrier = 'LG U+/KT';

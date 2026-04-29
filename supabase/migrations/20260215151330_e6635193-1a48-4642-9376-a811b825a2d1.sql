@@ -1,0 +1,1 @@
+UPDATE orders SET status = 'cancelled', updated_at = now() WHERE id IN ('4ffd7d02-85d9-4936-a652-e25ec3a35d7c', 'e29b2352-621a-4aa6-84a8-a3fce2c427e3', '421afefa-9178-4ba7-961a-0b710739fd73', 'bdcb9d57-7c07-4675-af47-d520348f2d79', 'f7615b4b-8b72-4017-9a6f-0b6185c8a976', '611ef971-8b18-43f6-89b6-ecc82a6801e6');

@@ -1,0 +1,1 @@
+UPDATE promo_codes SET valid_until = '2026-04-10 23:59:00+00', is_active = true, updated_at = now() WHERE code = 'SK2026';

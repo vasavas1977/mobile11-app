@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Request eSIM write permission (system-level on most OEMs,
+         but the resolution intent works without it on most devices) -->
+    <uses-permission android:name="android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS" />
+</manifest>

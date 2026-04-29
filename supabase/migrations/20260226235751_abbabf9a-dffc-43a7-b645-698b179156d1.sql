@@ -1,0 +1,1 @@
+UPDATE esim_packages SET top_up = true WHERE provider_id = '4e7e5af2-8e7a-4d5c-aea2-302fea9c5dac' AND is_active = true AND (top_up = false OR top_up IS NULL);

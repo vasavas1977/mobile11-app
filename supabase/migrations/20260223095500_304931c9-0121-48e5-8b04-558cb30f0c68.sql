@@ -1,0 +1,1 @@
+UPDATE esim_packages SET country_name = 'USA' WHERE country_name = 'United States';

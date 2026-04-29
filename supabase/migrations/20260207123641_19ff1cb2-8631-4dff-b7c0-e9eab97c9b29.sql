@@ -1,0 +1,30 @@
+-- Insert Thailand Limitless 1Mbps Packages (11 packages)
+INSERT INTO esim_packages (
+  package_id, name, country_name, country_code, data_amount, validity_days,
+  price, cost_price, currency, package_type, qos_speed, carrier, network_type,
+  is_active, description, category, sim_type
+) VALUES
+('33FB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 1 Day Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 1, 6.40, 1.60, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM'),
+('34FB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 2 Days Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 2, 9.92, 2.48, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM'),
+('35FB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 3 Days Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 3, 17.00, 4.25, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM'),
+('36FB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 4 Days Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 4, 19.56, 4.89, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM'),
+('37FB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 5 Days Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 5, 22.96, 5.74, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM'),
+('38FB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 7 Days Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 7, 26.16, 6.54, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM'),
+('39FB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 10 Days Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 10, 28.84, 7.21, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM'),
+('3AFB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 12 Days Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 12, 35.80, 8.95, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM'),
+('3BFB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 15 Days Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 15, 46.08, 11.52, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM'),
+('3CFB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 20 Days Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 20, 55.20, 13.80, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM'),
+('3DFB98E5-12B6-EE11-B65E-6045BD45CB1E', 'Thailand 30 Days Unlimited 1Mbps', 'Thailand', 'TH', 'Unlimited', 30, 63.28, 15.82, 'USD', 'limitless', '1Mbps', 'Real Future (Truemove)', '3G/4G/5G', true, 'Unlimited data at 1 Mbps constant speed. Perfect for basic browsing and messaging.', 'country', 'eSIM');
+
+-- Insert Global 109 Countries Limitless 1Mbps Packages (6 packages)
+INSERT INTO esim_packages (
+  package_id, name, country_name, country_code, data_amount, validity_days,
+  price, cost_price, currency, package_type, qos_speed, carrier, network_type,
+  is_active, description, category, sim_type
+) VALUES
+('B308533A-C869-EF11-BDFD-002248F838CF', 'Global 109 Countries 1 Day Unlimited 1Mbps', 'Global 109 Countries', 'GLOBAL109', 'Unlimited', 1, 12.16, 3.04, 'USD', 'limitless', '1Mbps', 'Multiple Carriers', '3G/4G', true, 'Unlimited data at 1 Mbps across 109 countries. Perfect for world travelers needing constant connectivity.', 'regional', 'eSIM'),
+('B408533A-C869-EF11-BDFD-002248F838CF', 'Global 109 Countries 7 Days Unlimited 1Mbps', 'Global 109 Countries', 'GLOBAL109', 'Unlimited', 7, 84.24, 21.06, 'USD', 'limitless', '1Mbps', 'Multiple Carriers', '3G/4G', true, 'Unlimited data at 1 Mbps across 109 countries. Perfect for world travelers needing constant connectivity.', 'regional', 'eSIM'),
+('B508533A-C869-EF11-BDFD-002248F838CF', 'Global 109 Countries 10 Days Unlimited 1Mbps', 'Global 109 Countries', 'GLOBAL109', 'Unlimited', 10, 122.52, 30.63, 'USD', 'limitless', '1Mbps', 'Multiple Carriers', '3G/4G', true, 'Unlimited data at 1 Mbps across 109 countries. Perfect for world travelers needing constant connectivity.', 'regional', 'eSIM'),
+('B608533A-C869-EF11-BDFD-002248F838CF', 'Global 109 Countries 15 Days Unlimited 1Mbps', 'Global 109 Countries', 'GLOBAL109', 'Unlimited', 15, 166.56, 41.64, 'USD', 'limitless', '1Mbps', 'Multiple Carriers', '3G/4G', true, 'Unlimited data at 1 Mbps across 109 countries. Perfect for world travelers needing constant connectivity.', 'regional', 'eSIM'),
+('B708533A-C869-EF11-BDFD-002248F838CF', 'Global 109 Countries 20 Days Unlimited 1Mbps', 'Global 109 Countries', 'GLOBAL109', 'Unlimited', 20, 246.96, 61.74, 'USD', 'limitless', '1Mbps', 'Multiple Carriers', '3G/4G', true, 'Unlimited data at 1 Mbps across 109 countries. Perfect for world travelers needing constant connectivity.', 'regional', 'eSIM'),
+('B808533A-C869-EF11-BDFD-002248F838CF', 'Global 109 Countries 30 Days Unlimited 1Mbps', 'Global 109 Countries', 'GLOBAL109', 'Unlimited', 30, 352.24, 88.06, 'USD', 'limitless', '1Mbps', 'Multiple Carriers', '3G/4G', true, 'Unlimited data at 1 Mbps across 109 countries. Perfect for world travelers needing constant connectivity.', 'regional', 'eSIM');

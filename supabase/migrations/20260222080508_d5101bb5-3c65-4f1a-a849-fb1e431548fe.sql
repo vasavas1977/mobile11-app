@@ -1,0 +1,1 @@
+UPDATE ai_chat_config SET auto_respond = true WHERE id = '00000000-0000-0000-0000-000000000001';

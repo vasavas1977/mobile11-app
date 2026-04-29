@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm Email Change - mobile11</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #FAF7F2;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <!-- Header -->
+    <div style="background-color: #ffffff; padding: 30px; text-align: center; border-bottom: 1px solid #E5E7EB;">
+      <img src="https://jaqyvbjllsanrnpzlyjw.supabase.co/storage/v1/object/public/assets/logo.png" alt="mobile11" style="height: 40px; width: auto;" />
+    </div>
+
+    <!-- Content -->
+    <div style="padding: 50px 30px;">
+      <h2 style="font-size: 28px; font-weight: bold; color: #1A1A1A; margin: 0 0 20px 0; text-align: center;">Confirm Your New Email 📧</h2>
+      
+      <p style="font-size: 16px; color: #4B5563; line-height: 1.6; margin: 0 0 30px 0; text-align: center;">
+        We received a request to change the email address associated with your mobile11 account.
+      </p>
+
+      <div style="background-color: #FAF7F2; padding: 20px; border-radius: 8px; text-align: center; margin: 30px 0; font-family: monospace; font-size: 18px; color: #f97316; font-weight: 600;">
+        {{ .Email }}
+      </div>
+
+      <p style="font-size: 16px; color: #4B5563; line-height: 1.6; margin: 0 0 30px 0; text-align: center;">
+        Please confirm this is your new email address by clicking the button below.
+      </p>
+
+      <div style="text-align: center; margin: 40px 0;">
+        <a href="{{ .ConfirmationURL }}" style="display: inline-block; padding: 16px 40px; background-color: #f97316; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">Confirm Email Change</a>
+      </div>
+
+      <div style="background-color: #FEF3C7; border-left: 4px solid #F59E0B; padding: 20px; margin: 30px 0; border-radius: 0 8px 8px 0;">
+        <p style="font-size: 14px; color: #92400E; margin: 0;">
+          <strong>⚠️ Important:</strong> After confirming, you'll need to use this new email address to sign in to your account.
+        </p>
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid #E5E7EB; margin: 30px 0;">
+
+      <p style="font-size: 14px; color: #4B5563; text-align: center; margin: 20px 0;">
+        Or copy and paste this link into your browser:<br>
+        <a href="{{ .ConfirmationURL }}" style="color: #f97316; word-break: break-all;">{{ .ConfirmationURL }}</a>
+      </p>
+
+      <p style="font-size: 14px; color: #4B5563; text-align: center; margin-top: 30px;">
+        This link will expire in 24 hours. If you didn't request this email change, 
+        please contact our support team immediately to secure your account.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #FAF7F2; padding: 30px; text-align: center; font-size: 14px; color: #9CA3AF;">
+      <p style="margin: 0 0 10px 0;">
+        <strong>mobile11</strong> - Unlimited Data Everywhere
+      </p>
+      <p style="margin: 0;">
+        Questions? Reply to this email or visit our support center
+      </p>
+    </div>
+  </div>
+</body>
+</html>

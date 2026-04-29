@@ -1,0 +1,1 @@
+UPDATE esim_packages SET country_code = 'TH' WHERE country_name = 'Thailand' AND (country_code IS NULL OR country_code = '' OR country_code = 'Thailand');

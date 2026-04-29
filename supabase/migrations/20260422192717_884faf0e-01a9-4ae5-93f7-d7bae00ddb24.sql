@@ -1,0 +1,1 @@
+UPDATE public.voice_bot_config SET did_number = '+6620303579', updated_at = now();

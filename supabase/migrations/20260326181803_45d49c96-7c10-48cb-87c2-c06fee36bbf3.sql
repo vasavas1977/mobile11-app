@@ -1,0 +1,8 @@
+INSERT INTO public.fallback_rules (rule_name, scope, primary_provider_id, fallback_provider_id, trigger_condition, trigger_threshold, priority, is_enabled, cooldown_minutes, notes)
+VALUES
+  ('USIMSA → TUGE: API Timeout', 'global', 'ed79f1a9-1c6f-450f-aae3-7fefc5cc2692', '4e7e5af2-8e7a-4d5c-aea2-302fea9c5dac', 'api_timeout', 30, 1, true, 15, 'Route to TUGE when USIMSA API response time exceeds 30s threshold'),
+  ('USIMSA → TUGE: High Failure Rate', 'global', 'ed79f1a9-1c6f-450f-aae3-7fefc5cc2692', '4e7e5af2-8e7a-4d5c-aea2-302fea9c5dac', 'failure_rate', 50, 2, true, 30, 'Switch to TUGE when USIMSA failure rate exceeds 50% over rolling window'),
+  ('TUGE → USIMSA: API Timeout', 'global', '4e7e5af2-8e7a-4d5c-aea2-302fea9c5dac', 'ed79f1a9-1c6f-450f-aae3-7fefc5cc2692', 'api_timeout', 30, 3, true, 15, 'Route to USIMSA when TUGE API response time exceeds 30s threshold'),
+  ('TUGE → USIMSA: High Failure Rate', 'global', '4e7e5af2-8e7a-4d5c-aea2-302fea9c5dac', 'ed79f1a9-1c6f-450f-aae3-7fefc5cc2692', 'failure_rate', 50, 4, true, 30, 'Switch to USIMSA when TUGE failure rate exceeds 50% over rolling window'),
+  ('USIMSA → TUGE: 5xx Server Error', 'regional', 'ed79f1a9-1c6f-450f-aae3-7fefc5cc2692', '4e7e5af2-8e7a-4d5c-aea2-302fea9c5dac', 'http_5xx', 3, 5, true, 60, 'Fallback after 3 consecutive 5xx errors from USIMSA API'),
+  ('TUGE → USIMSA: 5xx Server Error', 'regional', '4e7e5af2-8e7a-4d5c-aea2-302fea9c5dac', 'ed79f1a9-1c6f-450f-aae3-7fefc5cc2692', 'http_5xx', 3, 6, true, 60, 'Fallback after 3 consecutive 5xx errors from TUGE API');

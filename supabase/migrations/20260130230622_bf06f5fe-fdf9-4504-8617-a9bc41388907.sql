@@ -1,0 +1,37 @@
+-- Cleanup: Unpublish duplicate and stub articles in "About Mobile11" category
+-- This removes 13 English + 14 Thai duplicate/stub articles while keeping comprehensive versions
+
+UPDATE kb_articles 
+SET is_published = false, updated_at = now()
+WHERE id IN (
+  -- English duplicates/stubs (13)
+  '586b1df3-045a-4891-a1ca-ad3b9ffc6202',  -- faq-what-is-esim (duplicate)
+  'b1a5b20d-fb30-4a6d-8cc4-3b50e700e232',  -- what-is-an-esim (duplicate)
+  '14d79478-9ea5-4579-befd-760d992762b6',  -- can-i-keep-my-phone-number (stub)
+  '05652ec3-b86c-4f0f-b0e9-879f33d54a38',  -- esim-vs-physical-sim-what-s-the-difference (stub)
+  '4937c9f6-0acc-4f69-a046-57ed80031a0e',  -- how-can-i-contact-mobile11-support (stub)
+  'ff54d8bd-5698-4502-9a8c-a9e59a4c52ed',  -- how-do-i-contact-mobile11-support (stub)
+  'cf4410fd-a122-4225-ba89-c6672662829b',  -- what-if-i-need-help-with-my-esim (stub)
+  '034ee211-c771-493f-85d9-b59cc6297f38',  -- how-long-does-esim-activation-take (stub)
+  'bab5efe1-42ff-4dc1-8aa4-e1aaec5e66b4',  -- is-my-phone-unlocked-to-use-an-esim (stub)
+  '683c8cd2-f35d-4262-8137-fe02876a6afa',  -- which-mobile-devices-are-compatible-with-esim (stub)
+  '6d64da7a-7438-4df7-901b-eb8daefa15be',  -- can-i-use-esim-in-multiple-countries (stub)
+  '7c038ec6-9e92-4b59-b368-eeb92eba0e75',  -- does-the-esim-come-with-a-phone-number (stub)
+  '0b991089-fd7a-4dd8-bf7d-173a4b22cecf',  -- what-is-mobile11-and-who-runs-it (stub)
+  -- Thai duplicates/stubs (14)
+  '8b69b71a-0e1c-46d1-9e54-7f7c574ae219',  -- faq-what-is-esim (duplicate)
+  'c5ee88da-f1eb-41fc-83e2-7182a92e2bff',  -- faq-esim (duplicate)
+  '44e2136f-a7fb-4a74-81fb-ccbcb6b3515e',  -- esim-vs-sim (stub)
+  'b16f69e5-0bb0-426a-9557-6b418399a91f',  -- faq-esim-2 (stub)
+  '14e603f5-fbb5-4d40-90ef-ab911e1980bc',  -- faq-mobile11 (stub)
+  '96f6d37f-e4d6-4f6b-a6e1-0aea546b899b',  -- abt-96f6d37f (stub)
+  'ffd678bb-835a-4a60-8864-ac36918e9b09',  -- faq-esim-1 (stub)
+  '10e4fe90-80b9-4c48-8e48-7c4a0796d1e8',  -- abt-10e4fe90 (stub)
+  'cd22daaf-a567-410b-b4ec-4cbb7cc89051',  -- -cd22daaf (stub)
+  'a941041b-86bb-4b5d-afbc-4de2bc2b291c',  -- abt-a941041b (stub)
+  '633d2b11-a961-4f4d-8bae-a5d41d0bfcde',  -- abt-633d2b11 (stub)
+  '7a65d116-9b40-4aa3-b0df-1fd44ba32d2c',  -- faq-esim-4 (stub)
+  '5aaf2c38-e07e-4c15-a5de-40e0c2c3dc89',  -- faq-esim-3 (stub)
+  '6bfbd132-34cf-4fb7-823d-35e5203ed29c',  -- -6bfbd132 (stub)
+  '9ac3be1c-9280-481f-bacc-f76004af05de'   -- faq-esim-5 (stub)
+);

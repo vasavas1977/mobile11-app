@@ -1,0 +1,1 @@
+UPDATE esim_packages SET is_active = false WHERE country_name = 'Taiwan' AND is_active = true AND carrier = 'Taiwan Mobile/APT';

@@ -1,0 +1,1 @@
+UPDATE esim_packages SET top_up = true WHERE country_name = 'Russia' AND is_active = true;

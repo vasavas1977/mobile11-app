@@ -1,0 +1,293 @@
+project_id = "jaqyvbjllsanrnpzlyjw"
+
+[api]
+
+[auth]
+  additional_redirect_urls = ["https://mobile11.com", "https://www.mobile11.com"]
+  enable_confirmations = true
+  enable_signup = true
+  enabled = true
+  jwt_expiry = 3600
+  site_url = "https://mobile11.com"
+  [auth.email]
+    enable_signup = true
+
+[db]
+  port = 54322
+
+[functions]
+  [functions.activate-global-109-limitless]
+    verify_jwt = false
+  [functions.activate-thailand-1mbps]
+    verify_jwt = false
+  [functions.admin-fix-email]
+    verify_jwt = false
+  [functions.admin-topup-org-credit]
+    verify_jwt = false
+  [functions.agent-helper-summary]
+    verify_jwt = false
+  [functions.ai-chat-response]
+    verify_jwt = false
+  [functions.ai-cluster-intents]
+    verify_jwt = false
+  [functions.ai-daily-report]
+    verify_jwt = false
+  [functions.ai-ingest-event]
+    verify_jwt = false
+  [functions.ai-score-conversations]
+    verify_jwt = false
+  [functions.analyze-faq-trends]
+    verify_jwt = false
+  [functions.attribute-affiliate-sale]
+    verify_jwt = true
+  [functions.auth-email-hook]
+    verify_jwt = false
+  [functions.auto-retry-stuck-orders]
+    verify_jwt = false
+  [functions.backfill-loyalty-cashback]
+    verify_jwt = false
+  [functions.bulk-import-europe33-tuge]
+    verify_jwt = false
+  [functions.bulk-import-expansion]
+    verify_jwt = false
+  [functions.bulk-import-india-packages]
+    verify_jwt = false
+  [functions.bulk-import-multi-country]
+    verify_jwt = false
+  [functions.bulk-import-sg-c4]
+    verify_jwt = false
+  [functions.bulk-import-tuge-packages]
+    verify_jwt = false
+  [functions.calculate-loyalty-cashback]
+    verify_jwt = false
+  [functions.cancel-order]
+    verify_jwt = true
+  [functions.chat-email-otp]
+    verify_jwt = false
+  [functions.chat-voice-token]
+    verify_jwt = false
+  [functions.check-2c2p-payment-status]
+    verify_jwt = false
+  [functions.check-silent-conversations]
+    verify_jwt = false
+  [functions.check-tuge-usage]
+    verify_jwt = true
+  [functions.cleanup-duplicate-articles]
+    verify_jwt = false
+  [functions.create-2c2p-promptpay]
+    verify_jwt = true
+  [functions.create-2c2p-qr-direct]
+    verify_jwt = false
+  [functions.create-org-topup-payment]
+    verify_jwt = true
+  [functions.create-payment]
+    verify_jwt = true
+  [functions.create-setup-session]
+    verify_jwt = true
+  [functions.create-ticket]
+    verify_jwt = false
+  [functions.create-tuge-order]
+    verify_jwt = false
+  [functions.customer-portal]
+    verify_jwt = true
+  [functions.deduct-mobile11-money]
+    verify_jwt = false
+  [functions.deduct-org-credit]
+    verify_jwt = false
+  [functions.deploy-bridge]
+    verify_jwt = false
+  [functions.escalate-tickets]
+    verify_jwt = false
+  [functions.evaluate-triggers]
+    verify_jwt = false
+  [functions.expire-pending-orders]
+    verify_jwt = false
+  [functions.extend-order]
+    verify_jwt = true
+  [functions.facebook-connect]
+    verify_jwt = false
+  [functions.facebook-utility-test]
+    verify_jwt = false
+  [functions.facebook-webhook]
+    verify_jwt = false
+  [functions.fix-australia-spelling]
+    verify_jwt = false
+  [functions.fix-max-speed-qos]
+    verify_jwt = false
+  [functions.fix-swiss-naming]
+    verify_jwt = false
+  [functions.gemini-live-token]
+    verify_jwt = false
+  [functions.generate-brochure-page]
+    verify_jwt = false
+  [functions.generate-esim-image]
+    verify_jwt = false
+  [functions.generate-guide-images]
+    verify_jwt = false
+  [functions.generate-og-image]
+    verify_jwt = false
+  [functions.generate-outbound-messages]
+    verify_jwt = true
+  [functions.generate-regional-images]
+    verify_jwt = false
+  [functions.generate-sitemap]
+    verify_jwt = false
+  [functions.guest-signup]
+    verify_jwt = false
+  [functions.import-tuge-ac1-australia]
+    verify_jwt = false
+  [functions.import-tuge-at1-china-hk-macau]
+    verify_jwt = false
+  [functions.import-tuge-h2-tw-ais219-th]
+    verify_jwt = false
+  [functions.import-tuge-i2-japan]
+    verify_jwt = false
+  [functions.invite-redirect]
+    verify_jwt = false
+  [functions.line-auth]
+    verify_jwt = false
+  [functions.line-webhook]
+    verify_jwt = false
+  [functions.list-payment-methods]
+    verify_jwt = true
+  [functions.manual-send-confirmation]
+    verify_jwt = true
+  [functions.migrate-assets]
+    verify_jwt = false
+  [functions.migrate-help-articles]
+    verify_jwt = false
+  [functions.mvno-manage]
+    verify_jwt = false
+  [functions.mvno-provision]
+    verify_jwt = false
+  [functions.mvno-usage-sync]
+    verify_jwt = false
+  [functions.mvno-webhook]
+    verify_jwt = false
+  [functions.notify-agents]
+    verify_jwt = false
+  [functions.notify-line-group]
+    verify_jwt = false
+  [functions.outbound-scheduler]
+    verify_jwt = true
+  [functions.outbound-sender]
+    verify_jwt = false
+  [functions.payment-2c2p-webhook]
+    verify_jwt = false
+  [functions.post-payment-otp]
+    verify_jwt = false
+  [functions.process-auto-renewal]
+    verify_jwt = false
+  [functions.process-free-orders]
+    verify_jwt = true
+  [functions.process-referral-reward]
+    verify_jwt = false
+  [functions.provision-esim]
+    verify_jwt = true
+  [functions.receive-email]
+    verify_jwt = false
+  [functions.reclaim-facebook-thread]
+    verify_jwt = false
+  [functions.retry-payment]
+    verify_jwt = true
+  [functions.save-push-subscription]
+    verify_jwt = true
+  [functions.save-voice-transcript]
+    verify_jwt = false
+  [functions.send-affiliate-approval]
+    verify_jwt = false
+  [functions.send-affiliate-confirmation]
+    verify_jwt = false
+  [functions.send-agent-reply]
+    verify_jwt = true
+  [functions.send-email]
+    verify_jwt = false
+  [functions.send-expiry-warning]
+    verify_jwt = false
+  [functions.send-facebook-reply]
+    verify_jwt = true
+  [functions.send-line-reply]
+    verify_jwt = true
+  [functions.send-order-confirmation]
+    verify_jwt = false
+  [functions.send-order-line-notification]
+    verify_jwt = false
+  [functions.send-push-notification]
+    verify_jwt = false
+  [functions.send-welcome-email]
+    verify_jwt = false
+  [functions.send-whatsapp-reply]
+    verify_jwt = false
+  [functions.set-renewal-payment-method]
+    verify_jwt = true
+  [functions.stripe-webhook]
+    verify_jwt = false
+  [functions.sync-tuge-products]
+    verify_jwt = true
+  [functions.sync-usimsa-order]
+    verify_jwt = true
+  [functions.test-email-confirmation]
+    verify_jwt = false
+  [functions.test-topup-path]
+    verify_jwt = true
+  [functions.test-tuge-api]
+    verify_jwt = false
+  [functions.toggle-1mbps-packages]
+    enabled = true
+    extra_search_path = ["public", "extensions"]
+    max_rows = 1000
+    port = 54321
+    schemas = ["public"]
+    verify_jwt = true
+  [functions.track-affiliate-click]
+    verify_jwt = false
+  [functions.transcribe-voice-chunk]
+    verify_jwt = false
+  [functions.transfer-guest-orders]
+    verify_jwt = false
+  [functions.tuge-integration]
+    verify_jwt = true
+  [functions.tuge-webhook]
+    verify_jwt = false
+  [functions.update-europe-42-packages]
+    verify_jwt = false
+  [functions.update-guest-email]
+    verify_jwt = false
+  [functions.update-package-descriptions]
+    verify_jwt = true
+  [functions.update-package-types]
+    verify_jwt = false
+  [functions.update-thailand-1mbps-prices]
+    verify_jwt = false
+  [functions.upsert-esim-package]
+    verify_jwt = true
+  [functions.usimsa-integration]
+    verify_jwt = true
+  [functions.usimsa-webhook]
+    verify_jwt = false
+  [functions.usimsa-webhook-production]
+    verify_jwt = false
+  [functions.voice-bot-session]
+    verify_jwt = false
+  [functions.voice-live-session]
+    verify_jwt = false
+  [functions.voice-diag]
+    verify_jwt = false
+  [functions.voice-send-sms]
+    verify_jwt = false
+  [functions.voice-webhook]
+    verify_jwt = false
+  [functions.whatsapp-webhook]
+    verify_jwt = false
+
+[inbucket]
+  enabled = false
+  port = 54324
+
+[storage]
+  enabled = true
+  file_size_limit = "50MiB"
+
+[studio]
+  enabled = true
+  port = 54323

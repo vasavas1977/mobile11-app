@@ -1,0 +1,1 @@
+UPDATE kb_articles SET content = REPLACE(content, 'Low usage', 'Lite'), title = REPLACE(title, 'Low usage', 'Lite') WHERE content LIKE '%Low usage%' OR title LIKE '%Low usage%';

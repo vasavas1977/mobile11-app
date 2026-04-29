@@ -1,0 +1,1 @@
+ALTER TABLE public.chatbot_leads ADD COLUMN IF NOT EXISTS purchase_reason text;
