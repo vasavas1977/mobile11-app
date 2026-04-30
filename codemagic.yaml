@@ -83,7 +83,8 @@ workflows:
           success: true
           failure: true
       app_store_connect:
-        auth: integration
+        apple_id: $APP_STORE_CONNECT_APPLE_ID
+        password: $APP_STORE_CONNECT_PASSWORD
         submit_to_testflight: true
         beta_groups:
           - Mobile11 Testers
