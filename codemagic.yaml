@@ -92,10 +92,8 @@ workflows:
   android-release:
     name: Mobile11 Android Release
     max_build_duration: 120
-    instance_type: mac_mini_m2
+    instance_type: linux_x2
     environment:
-      android_signing:
-        - mobile11_keystore
       groups:
         - android_credentials
       vars:
@@ -119,28 +117,33 @@ workflows:
         script: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
 
-      # 2. Install Node dependencies
+      # 2. Decode keystore from env var
+      - name: Set up Android keystore
+        script: |
+          echo $ANDROID_KEYSTORE | base64 --decode > $CM_BUILD_DIR/android/app/mobile11-release.keystore
+
+      # 3. Install Node dependencies
       - name: Install npm dependencies
         script: |
           npm install
 
-      # 3. Build web assets
+      # 4. Build web assets
       - name: Build web app
         script: |
           npm run build
 
-      # 4. Sync web assets to native project
+      # 5. Sync web assets to native project
       - name: Sync Capacitor
         script: |
           npx cap sync android
 
-      # 5. Set build number
+      # 6. Set build number
       - name: Set build number
         script: |
           UPDATED_BUILD_NUMBER=$(($BUILD_NUMBER + 1))
           echo "BUILD_NUMBER=$UPDATED_BUILD_NUMBER" >> $CM_ENV
 
-      # 6. Build Android App Bundle
+      # 7. Build Android App Bundle (signed)
       - name: Build Android release
         script: |
           cd $CM_BUILD_DIR/android
@@ -159,7 +162,8 @@ workflows:
         notify:
           success: true
           failure: true
-      google_play:
-        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
-        track: internal
-        submit_as_draft: true
+      # Google Play auto-publish (uncomment when service account JSON is added):
+      # google_play:
+      #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+      #   track: internal
+      #   submit_as_draft: true

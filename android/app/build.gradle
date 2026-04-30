@@ -9,16 +9,27 @@ android {
         applicationId "com.mobile11.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
+        versionCode project.hasProperty('versionCode') ? project.property('versionCode').toInteger() : 1
+        versionName project.hasProperty('versionName') ? project.property('versionName') : "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            if (System.env.ANDROID_KEYSTORE_PASSWORD) {
+                storeFile file("mobile11-release.keystore")
+                storePassword System.env.ANDROID_KEYSTORE_PASSWORD
+                keyAlias System.env.ANDROID_KEY_ALIAS
+                keyPassword System.env.ANDROID_KEYSTORE_PASSWORD
+            }
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug // Replace with release signing config
+            signingConfig System.env.ANDROID_KEYSTORE_PASSWORD ? signingConfigs.release : signingConfigs.debug
         }
     }
 
