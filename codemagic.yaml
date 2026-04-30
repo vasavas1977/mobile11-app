@@ -82,12 +82,9 @@ workflows:
         notify:
           success: true
           failure: true
-      app_store_connect:
-        apple_id: $APP_STORE_CONNECT_APPLE_ID
-        password: $APP_STORE_CONNECT_PASSWORD
-        submit_to_testflight: true
-        beta_groups:
-          - Mobile11 Testers
+      # NOTE: App Store Connect API key required for auto-upload to TestFlight.
+      # Ask Account Holder to enable API access, then add the key in Codemagic.
+      # For now, download the .ipa from artifacts and upload via Transporter app.
 
   # ═══════════════════════════════════════════════════════════════════
   # Android — Build, sign, and upload to Google Play
