@@ -6,16 +6,15 @@ workflows:
     name: Mobile11 iOS Release
     max_build_duration: 120
     instance_type: mac_mini_m2
-    integrations:
-      app_store_connect: codemagic  # Set up in Codemagic Team settings
     environment:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.mobile11.app
+      groups:
+        - ios_credentials
       vars:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
-        APP_STORE_APP_ID: 0000000000  # Replace with your App Store Connect App ID
       node: v18.20.0
       xcode: latest
       cocoapods: default
@@ -36,22 +35,22 @@ workflows:
         script: |
           npm install
 
-      # 2. Install CocoaPods
-      - name: Install CocoaPods dependencies
-        script: |
-          cd ios/App && pod install
-
-      # 3. Build web assets
+      # 2. Build web assets
       - name: Build web app
         script: |
           npm run build
 
-      # 4. Sync web assets to native project
+      # 3. Sync web assets to native project
       - name: Sync Capacitor
         script: |
           npx cap sync ios
 
-      # 5. Set up code signing
+      # 4. Install CocoaPods
+      - name: Install CocoaPods dependencies
+        script: |
+          cd ios/App && pod install
+
+      # 5. Set up code signing (fetches profiles using Apple ID)
       - name: Set up code signing
         script: |
           xcode-project use-profiles
@@ -60,8 +59,7 @@ workflows:
       - name: Increment build number
         script: |
           cd $CM_BUILD_DIR/ios/App
-          LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APP_ID")
-          agvtool new-version -all $((${LATEST_BUILD_NUMBER} + 1))
+          agvtool new-version -all $(($BUILD_NUMBER + 1))
 
       # 7. Build IPA
       - name: Build IPA for distribution
@@ -80,7 +78,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - nico@mobile11.com  # Replace with your email
+          - vasavas@1-to-all.com
         notify:
           success: true
           failure: true
@@ -89,8 +87,6 @@ workflows:
         submit_to_testflight: true
         beta_groups:
           - Mobile11 Testers
-        # Uncomment when ready to submit to App Store review:
-        # submit_to_app_store: true
 
   # ═══════════════════════════════════════════════════════════════════
   # Android — Build, sign, and upload to Google Play
@@ -101,9 +97,9 @@ workflows:
     instance_type: mac_mini_m2
     environment:
       android_signing:
-        - keystore_reference  # Set up in Codemagic > Environment variables
+        - mobile11_keystore
       groups:
-        - google_play  # Must contain GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        - android_credentials
       vars:
         PACKAGE_NAME: "com.mobile11.app"
       node: v18.20.0
@@ -143,12 +139,7 @@ workflows:
       # 5. Set build number
       - name: Set build number
         script: |
-          LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME")
-          if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
-            UPDATED_BUILD_NUMBER=$BUILD_NUMBER
-          else
-            UPDATED_BUILD_NUMBER=$((${LATEST_GOOGLE_PLAY_BUILD_NUMBER} + 1))
-          fi
+          UPDATED_BUILD_NUMBER=$(($BUILD_NUMBER + 1))
           echo "BUILD_NUMBER=$UPDATED_BUILD_NUMBER" >> $CM_ENV
 
       # 6. Build Android App Bundle
@@ -166,7 +157,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - nico@mobile11.com  # Replace with your email
+          - vasavas@1-to-all.com
         notify:
           success: true
           failure: true
