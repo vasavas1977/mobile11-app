@@ -12,7 +12,7 @@ const SCRIPT_RANGES: Record<string, RegExp> = {
   devanagari: /[\u0900-\u097F]/g,
   bengali: /[\u0980-\u09FF]/g,
   cyrillic: /[\u0400-\u04FF]/g,
-  latin: /[a-zA-ZĂ€-Ă–Ă˜-Ă¶Ă¸-Ă¿Ä€-Å¾á¸€-á»¿]/g,
+  latin: /[a-zA-ZÀ-ÖØ-öø-ÿĀ-žḀ-ỿ]/g,
 };
 
 // Map BCP-47 speech codes (prefix) to their expected script

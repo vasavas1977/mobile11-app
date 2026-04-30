@@ -63,7 +63,7 @@ export function removeFiller(text: string): string {
 
 // ─── Wrong-script fragment removal ───
 const THAI_RANGE = /[\u0E00-\u0E7F]/;
-const LATIN_RANGE = /[a-zA-ZÀ-ÖØ-öø-ÿ]/;
+const LATIN_RANGE = /[a-zA-Z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF]/;
 const CJK_RANGE = /[\u4E00-\u9FFF\u3040-\u30FF]/;
 const KOREAN_RANGE = /[\uAC00-\uD7AF]/;
 const ARABIC_RANGE = /[\u0600-\u06FF]/;

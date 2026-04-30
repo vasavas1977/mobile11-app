@@ -1,4 +1,5 @@
 import { lazy, Suspense, Component, ReactNode, useState, useEffect } from "react";
+import { useIsMobileApp } from "@/hooks/useIsMobileApp";
 // App entry point
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -123,6 +124,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 
 // Lazy load pages for better performance
 const LandingPage = lazy(() => import("./pages/LandingPage").then(m => ({ default: m.LandingPage })));
+const NativeAppPage = lazy(() => import("./pages/NativeAppPage"));
 const LandingPageV2 = lazy(() => import("./pages/LandingPageV2"));
 // const ThailandLocalPage = lazy(() => import("./pages/ThailandLocalPage").then(m => ({ default: m.ThailandLocalPage })));
 const AuthPage = lazy(() => import("./pages/AuthPage").then(m => ({ default: m.AuthPage })));
@@ -259,6 +261,15 @@ const LoadingFallback = () => {
 
 const queryClient = new QueryClient();
 
+// RootRouter: redirects mobile users to /app, desktop users see LandingPage
+function RootRouter() {
+  const isMobileApp = useIsMobileApp();
+  if (isMobileApp) {
+    return <Navigate to="/app" replace />;
+  }
+  return <LandingPage />;
+}
+
 // Wrapper to conditionally show chat widget
 const ChatWidgetWrapper = () => {
   const location = useLocation();
@@ -291,7 +302,10 @@ const App = () => (
                 <ErrorBoundary>
                   <Suspense fallback={<LoadingFallback />}> 
                     <Routes>
-                      <Route path="/" element={<LandingPage />} />
+                      <Route path="/" element={<RootRouter />} />
+                      <Route path="/app" element={<NativeAppPage tab="store" />} />
+                      <Route path="/app/esims" element={<NativeAppPage tab="esims" />} />
+                      <Route path="/app/profile" element={<NativeAppPage tab="profile" />} />
                       <Route path="/preview" element={<LandingPageV2 />} />
                       {/* <Route path="/thailand-local" element={<ThailandLocalPage />} /> */}
                       {/* <Route path="/th" element={<ThailandLocalPage />} /> */}
@@ -401,6 +415,8 @@ const App = () => (
                       <Route path="/translate" element={<TranslatePage />} />
                       <Route path="/translate2/*" element={<Translate2Page />} />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                      {/* Legacy landing for direct access */}
+                      <Route path="/landing" element={<LandingPage />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </Suspense>
