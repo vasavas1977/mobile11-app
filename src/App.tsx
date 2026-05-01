@@ -125,6 +125,16 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 // Lazy load pages for better performance
 const LandingPage = lazy(() => import("./pages/LandingPage").then(m => ({ default: m.LandingPage })));
 const NativeAppPage = lazy(() => import("./pages/NativeAppPage"));
+const LanguageScreen = lazy(() => import("./components/native/screens/LanguageScreen").then(m => ({ default: m.LanguageScreen })));
+const CurrencyScreen = lazy(() => import("./components/native/screens/CurrencyScreen").then(m => ({ default: m.CurrencyScreen })));
+const { SupportHomeSwitch, SupportCategorySwitch, SupportArticleSwitch } = (() => {
+  const mod = import("./components/native/screens/SupportRouteSwitch");
+  return {
+    SupportHomeSwitch: lazy(() => mod.then(m => ({ default: m.SupportHomeSwitch }))),
+    SupportCategorySwitch: lazy(() => mod.then(m => ({ default: m.SupportCategorySwitch }))),
+    SupportArticleSwitch: lazy(() => mod.then(m => ({ default: m.SupportArticleSwitch }))),
+  };
+})();
 const LandingPageV2 = lazy(() => import("./pages/LandingPageV2"));
 // const ThailandLocalPage = lazy(() => import("./pages/ThailandLocalPage").then(m => ({ default: m.ThailandLocalPage })));
 const AuthPage = lazy(() => import("./pages/AuthPage").then(m => ({ default: m.AuthPage })));
@@ -306,6 +316,8 @@ const App = () => (
                       <Route path="/app" element={<NativeAppPage tab="store" />} />
                       <Route path="/app/esims" element={<NativeAppPage tab="esims" />} />
                       <Route path="/app/profile" element={<NativeAppPage tab="profile" />} />
+                      <Route path="/profile/language" element={<LanguageScreen />} />
+                      <Route path="/profile/currency" element={<CurrencyScreen />} />
                       <Route path="/preview" element={<LandingPageV2 />} />
                       {/* <Route path="/thailand-local" element={<ThailandLocalPage />} /> */}
                       {/* <Route path="/th" element={<ThailandLocalPage />} /> */}
@@ -348,10 +360,10 @@ const App = () => (
                       <Route path="/business/transactions" element={<BusinessTransactionsPage />} />
                       <Route path="/business/invite/:token" element={<AcceptInvitationPage />} />
                       <Route path="/contact" element={<ContactPage />} />
-                      {/* Support / Help Center - primary routes */}
-                      <Route path="/support" element={<HelpCenterAiralo />} />
-                      <Route path="/support/:categorySlug" element={<HelpCategoryPage />} />
-                      <Route path="/support/:categorySlug/:articleSlug" element={<HelpArticlePage />} />
+                      {/* Support / Help Center - responsive routes (mobile vs desktop) */}
+                      <Route path="/support" element={<SupportHomeSwitch />} />
+                      <Route path="/support/:categorySlug" element={<SupportCategorySwitch />} />
+                      <Route path="/support/:categorySlug/:articleSlug" element={<SupportArticleSwitch />} />
                       {/* Legacy Help Center redirects */}
                       <Route path="/help-center" element={<Navigate to="/support" replace />} />
                       <Route path="/help-center/:categorySlug" element={<HelpCenterRedirect />} />

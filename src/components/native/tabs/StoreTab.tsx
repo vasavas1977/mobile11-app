@@ -4,7 +4,7 @@ import { Search, Sparkles, ChevronRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getCountryFlag } from "@/lib/countryFlags";
+import { FlagRect } from "../flags";
 import { GuidedFlowSheet } from "../guided/GuidedFlowSheet";
 
 interface CountryWithPrice {
@@ -124,9 +124,7 @@ export function StoreTab() {
               onClick={() => handleCountryTap(country)}
               className="w-full flex items-center gap-3.5 px-4 py-3.5 bg-white rounded-2xl shadow-sm active:scale-[0.98] transition-transform"
             >
-              <span className="text-[28px] leading-none">
-                {getCountryFlag(country.country_code)}
-              </span>
+              <FlagRect iso={country.country_code.toLowerCase()} size="md" />
               <span className="flex-1 text-left text-[15px] font-medium text-[#1A1A1A]">
                 {country.country_name}
               </span>

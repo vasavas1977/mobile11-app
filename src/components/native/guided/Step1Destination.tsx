@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Search, CheckCircle2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { getCountryFlag } from "@/lib/countryFlags";
+import { FlagRect } from "../flags";
 import { DestinationIllustration } from "../illustrations/DestinationIllustration";
 
 interface Step1Props {
@@ -90,9 +90,7 @@ export function Step1Destination({ onSelect, selected }: Step1Props) {
                   : "bg-white hover:bg-gray-50"
               }`}
             >
-              <span className="text-[22px] leading-none">
-                {getCountryFlag(country.code)}
-              </span>
+              <FlagRect iso={country.code.toLowerCase()} size="md" />
               <span className="flex-1 text-left text-[14px] font-medium text-[#1A1A1A]">
                 {country.name}
               </span>

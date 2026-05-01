@@ -3,7 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getCountryFlag } from "@/lib/countryFlags";
+import { FlagRect } from "../flags";
 import { Smartphone, Wifi, Clock, ChevronRight } from "lucide-react";
 import { DestinationIllustration } from "../illustrations/DestinationIllustration";
 
@@ -184,9 +184,7 @@ function LoggedInState({ userId }: { userId: string }) {
               onClick={() => navigate(`/my-esims/${order.id}`)}
               className="w-full flex items-center gap-3.5 p-4 bg-white rounded-2xl shadow-sm active:scale-[0.98] transition-transform text-left"
             >
-              <span className="text-[28px] leading-none">
-                {getCountryFlag(pkg?.country_code)}
-              </span>
+              <FlagRect iso={pkg?.country_code?.toLowerCase()} size="md" />
               <div className="flex-1 min-w-0">
                 <p className="text-[14px] font-semibold text-[#1A1A1A] truncate">
                   {pkg?.country_name || "eSIM"}

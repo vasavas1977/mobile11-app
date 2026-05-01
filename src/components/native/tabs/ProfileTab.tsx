@@ -19,7 +19,7 @@ import { Haptics, ImpactStyle } from "@capacitor/haptics";
 export function ProfileTab() {
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
-  const { language, currency, setLanguage, setCurrency } = useLanguage();
+  const { language, currency } = useLanguage();
 
   const handleTap = (action: () => void) => {
     if (Capacitor.isNativePlatform()) {
@@ -102,18 +102,18 @@ export function ProfileTab() {
           icon={Globe}
           label="Language"
           value={language.toUpperCase()}
-          onTap={() => handleTap(() => navigate("/settings"))}
+          onTap={() => handleTap(() => navigate("/profile/language"))}
         />
         <SettingsCard
           icon={DollarSign}
           label="Currency"
           value={currency}
-          onTap={() => handleTap(() => navigate("/settings"))}
+          onTap={() => handleTap(() => navigate("/profile/currency"))}
         />
         <SettingsCard
           icon={HelpCircle}
           label="Help Center"
-          onTap={() => handleTap(() => navigate("/help"))}
+          onTap={() => handleTap(() => navigate("/support"))}
         />
         <SettingsCard
           icon={Share2}

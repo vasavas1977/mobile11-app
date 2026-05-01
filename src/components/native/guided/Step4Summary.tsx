@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCart } from "@/contexts/CartContext";
-import { getCountryFlag } from "@/lib/countryFlags";
 import { Wifi, Clock, Zap, ShoppingBag } from "lucide-react";
 import { Capacitor } from "@capacitor/core";
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
+import { FlagRect } from "../flags";
 import type { EsimPackageRow } from "./recommendPackage";
 import { ReadyIllustration } from "../illustrations/ReadyIllustration";
 
@@ -81,9 +81,7 @@ export function Step4Summary({ package_, countryName, onClose }: Step4Props) {
       {/* Package Card */}
       <div className="bg-white rounded-2xl shadow-sm p-5 mb-5">
         <div className="flex items-center gap-3 mb-4">
-          <span className="text-[28px] leading-none">
-            {getCountryFlag(package_.country_code)}
-          </span>
+          <FlagRect iso={package_.country_code.toLowerCase()} size="lg" />
           <div>
             <p className="text-[15px] font-bold text-[#1A1A1A]">
               {package_.country_name}
