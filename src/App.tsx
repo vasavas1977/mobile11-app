@@ -138,6 +138,7 @@ const { SupportHomeSwitch, SupportCategorySwitch, SupportArticleSwitch } = (() =
 const LandingPageV2 = lazy(() => import("./pages/LandingPageV2"));
 // const ThailandLocalPage = lazy(() => import("./pages/ThailandLocalPage").then(m => ({ default: m.ThailandLocalPage })));
 const AuthPage = lazy(() => import("./pages/AuthPage").then(m => ({ default: m.AuthPage })));
+import { AuthRouteSwitch } from "@/components/native/screens/AuthRouteSwitch";
 const AuthCallbackPage = lazy(() => import("./pages/AuthCallbackPage").then(m => ({ default: m.AuthCallbackPage })));
 const LineAuthCallbackPage = lazy(() => import("./pages/LineAuthCallbackPage").then(m => ({ default: m.default })));
 const FacebookOAuthCallback = lazy(() => import("./components/admin/contact-center/FacebookOAuthCallback").then(m => ({ default: m.FacebookOAuthCallback })));
@@ -321,7 +322,7 @@ const App = () => (
                       <Route path="/preview" element={<LandingPageV2 />} />
                       {/* <Route path="/thailand-local" element={<ThailandLocalPage />} /> */}
                       {/* <Route path="/th" element={<ThailandLocalPage />} /> */}
-                      <Route path="/auth" element={<AuthPage />} />
+                      <Route path="/auth" element={<AuthRouteSwitch />} />
                       <Route path="/auth/callback" element={<AuthCallbackPage />} />
                       <Route path="/auth/line/callback" element={<LineAuthCallbackPage />} />
                       <Route path="/auth/facebook/callback" element={<FacebookOAuthCallback />} />
