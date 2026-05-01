@@ -1,155 +1,372 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Sparkles, ChevronRight } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/hooks/useAuth";
+import { useBestSellerPackages } from "@/hooks/useBestSellerPackages";
 import { FlagRect } from "../flags";
-import { GuidedFlowSheet } from "../guided/GuidedFlowSheet";
+import { Bell, Search, Globe, ChevronRight } from "lucide-react";
+import { PromoCarousel } from "../store/PromoCarousel";
+import { SearchSheet } from "../store/SearchSheet";
 
-interface CountryWithPrice {
+type TabId = "popular" | "countries" | "multi-country";
+
+interface DestinationRow {
+  id: string;
+  name: string;
   country_code: string;
-  country_name: string;
-  cheapest_price: number;
+  subtitle?: string;
+  price: number;
+  isMultiCountry: boolean;
+  countryCount?: number;
+  packageId?: string;
 }
 
 export function StoreTab() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [showGuided, setShowGuided] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabId>("popular");
+  const [showSearch, setShowSearch] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const navigate = useNavigate();
-  const { formatPrice } = useLanguage();
+  const { formatPrice, language } = useLanguage();
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const touchStartY = useRef(0);
 
-  // Fetch distinct countries with cheapest price
-  const { data: countries = [], isLoading } = useQuery({
-    queryKey: ["native-popular-countries"],
+  // Fetch user profile for greeting
+  const { data: profile } = useQuery({
+    queryKey: ["native-profile", user?.id],
+    queryFn: async () => {
+      if (!user?.id) return null;
+      const { data } = await supabase
+        .from("profiles")
+        .select("first_name, email")
+        .eq("user_id", user.id)
+        .single();
+      return data;
+    },
+    enabled: !!user?.id,
+    staleTime: 10 * 60 * 1000,
+  });
+
+  // Fetch loyalty balance
+  const { data: loyalty } = useQuery({
+    queryKey: ["native-loyalty", user?.id],
+    queryFn: async () => {
+      if (!user?.id) return null;
+      const { data } = await supabase
+        .from("user_loyalty")
+        .select("mobile11_money_balance")
+        .eq("user_id", user.id)
+        .single();
+      return data;
+    },
+    enabled: !!user?.id,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  // Best sellers
+  const { data: bestSellers = [], isLoading: loadingBestSellers } =
+    useBestSellerPackages(language);
+
+  // All active packages for Countries + Multi-country tabs
+  const { data: allPackages = [], isLoading: loadingAll } = useQuery({
+    queryKey: ["native-all-packages"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("esim_packages")
-        .select("country_code, country_name, price")
-        .eq("is_active", true)
-        .order("price", { ascending: true });
-
+        .select(
+          "id, country_code, country_name, price, package_type, included_countries, data_amount, validity_days, name"
+        )
+        .eq("is_active", true);
       if (error) throw error;
-
-      // Aggregate: distinct countries with cheapest price
-      const map = new Map<string, CountryWithPrice>();
-      for (const row of data || []) {
-        if (!map.has(row.country_code)) {
-          map.set(row.country_code, {
-            country_code: row.country_code,
-            country_name: row.country_name,
-            cheapest_price: row.price,
-          });
-        }
-      }
-
-      // Sort by popular destinations first, then alphabetically
-      const popularCodes = ["TH", "JP", "KR", "CN", "HK", "SG", "VN", "TW", "MY", "US", "AU", "GB", "FR", "DE", "IT"];
-      const all = Array.from(map.values());
-      const popular = popularCodes
-        .map((code) => all.find((c) => c.country_code === code))
-        .filter(Boolean) as CountryWithPrice[];
-      const rest = all
-        .filter((c) => !popularCodes.includes(c.country_code))
-        .sort((a, b) => a.country_name.localeCompare(b.country_name));
-
-      return [...popular, ...rest];
+      return data || [];
     },
     staleTime: 5 * 60 * 1000,
   });
 
-  // Filter by search
-  const filtered = useMemo(() => {
-    if (!searchQuery.trim()) return countries.slice(0, 20);
-    const q = searchQuery.toLowerCase();
-    return countries.filter(
-      (c) =>
-        c.country_name.toLowerCase().includes(q) ||
-        c.country_code.toLowerCase().includes(q)
-    );
-  }, [countries, searchQuery]);
+  // Derived: Countries tab (single-country, A-Z, min price)
+  const countriesList = useMemo((): DestinationRow[] => {
+    const map = new Map<string, { name: string; code: string; minPrice: number }>();
+    for (const pkg of allPackages) {
+      const isMulti =
+        pkg.package_type === "regional" ||
+        pkg.package_type === "global" ||
+        (Array.isArray(pkg.included_countries) && (pkg.included_countries as string[]).length > 1);
+      if (isMulti) continue;
+      const key = pkg.country_code;
+      const existing = map.get(key);
+      if (!existing || pkg.price < existing.minPrice) {
+        map.set(key, {
+          name: pkg.country_name,
+          code: pkg.country_code,
+          minPrice: existing ? Math.min(existing.minPrice, pkg.price) : pkg.price,
+        });
+      }
+    }
+    return Array.from(map.values())
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((c) => ({
+        id: c.code,
+        name: c.name,
+        country_code: c.code,
+        price: c.minPrice,
+        isMultiCountry: false,
+      }));
+  }, [allPackages]);
 
-  const handleCountryTap = (country: CountryWithPrice) => {
-    const slug = country.country_name.toLowerCase().replace(/\s+/g, "-").replace(/\//g, "-");
-    navigate(`/esim/${slug}`);
+  // Derived: Multi-country tab (regional + global, sorted by country count asc)
+  const multiCountryList = useMemo((): DestinationRow[] => {
+    const map = new Map<
+      string,
+      { name: string; code: string; minPrice: number; countryCount: number }
+    >();
+    for (const pkg of allPackages) {
+      const included = Array.isArray(pkg.included_countries)
+        ? (pkg.included_countries as string[])
+        : [];
+      const isMulti =
+        pkg.package_type === "regional" ||
+        pkg.package_type === "global" ||
+        included.length > 1;
+      if (!isMulti) continue;
+      const key = pkg.country_name || pkg.name;
+      const existing = map.get(key);
+      const count = included.length || 1;
+      if (!existing || pkg.price < existing.minPrice) {
+        map.set(key, {
+          name: key,
+          code: pkg.country_code || "MULTI",
+          minPrice: existing ? Math.min(existing.minPrice, pkg.price) : pkg.price,
+          countryCount: existing ? Math.max(existing.countryCount, count) : count,
+        });
+      }
+    }
+    return Array.from(map.values())
+      .sort((a, b) => a.countryCount - b.countryCount || a.name.localeCompare(b.name))
+      .map((m) => ({
+        id: m.code + "-" + m.name,
+        name: m.name,
+        country_code: m.code,
+        subtitle: `${m.countryCount} countries`,
+        price: m.minPrice,
+        isMultiCountry: true,
+        countryCount: m.countryCount,
+      }));
+  }, [allPackages]);
+
+  // Derived: Popular tab (best sellers)
+  const popularList = useMemo((): DestinationRow[] => {
+    return bestSellers.map((pkg) => ({
+      id: pkg.id,
+      name: pkg.country_name,
+      country_code: pkg.country_code,
+      subtitle: `${pkg.data_amount} · ${pkg.validity_days} days`,
+      price: pkg.price,
+      isMultiCountry:
+        pkg.package_type === "regional" || pkg.package_type === "global",
+      packageId: pkg.id,
+    }));
+  }, [bestSellers]);
+
+  // Current list based on active tab
+  const currentList = useMemo(() => {
+    switch (activeTab) {
+      case "popular":
+        return popularList;
+      case "countries":
+        return countriesList;
+      case "multi-country":
+        return multiCountryList;
+    }
+  }, [activeTab, popularList, countriesList, multiCountryList]);
+
+  const isLoading = activeTab === "popular" ? loadingBestSellers : loadingAll;
+
+  // Pull-to-refresh
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
   };
 
+  const handleTouchEnd = async (e: React.TouchEvent) => {
+    const diff = e.changedTouches[0].clientY - touchStartY.current;
+    const scrollTop = scrollRef.current?.scrollTop || 0;
+    if (diff > 80 && scrollTop <= 0) {
+      setRefreshing(true);
+      await queryClient.invalidateQueries({ queryKey: ["native-all-packages"] });
+      await queryClient.invalidateQueries({ queryKey: ["best-seller-packages"] });
+      await queryClient.invalidateQueries({ queryKey: ["native-loyalty"] });
+      setRefreshing(false);
+    }
+  };
+
+  // Greeting
+  const firstName = profile?.first_name || profile?.email?.split("@")[0] || "";
+  const balance = loyalty?.mobile11_money_balance || 0;
+
+  // Row tap handler
+  const handleRowTap = (row: DestinationRow) => {
+    if (row.packageId) {
+      navigate(`/create-order/${row.packageId}`);
+    } else {
+      const slug = row.name
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/\//g, "-");
+      navigate(`/esim/${slug}`);
+    }
+  };
+
+  const tabs: { id: TabId; label: string }[] = [
+    { id: "popular", label: "Popular" },
+    { id: "countries", label: "Countries" },
+    { id: "multi-country", label: "Multi-country" },
+  ];
+
   return (
-    <div className="px-4 pt-4">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-5">
-        <h1 className="text-xl font-bold text-[#1A1A1A] tracking-tight">
-          Mobile11
-        </h1>
-      </div>
-
-      {/* Search Input */}
-      <div className="relative mb-6">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#9CA3AF]" />
-        <input
-          type="text"
-          placeholder="Where do you need an eSIM?"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full h-12 pl-11 pr-4 bg-white rounded-2xl border-0 shadow-sm text-[15px] text-[#1A1A1A] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#F97316]/20"
-        />
-      </div>
-
-      {/* Section Title */}
-      <h2 className="text-[15px] font-semibold text-[#1A1A1A] mb-3">
-        {searchQuery ? "Search Results" : "Popular Destinations"}
-      </h2>
-
-      {/* Country List */}
-      {isLoading ? (
-        <div className="space-y-3">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="h-14 bg-white rounded-2xl animate-pulse"
-            />
-          ))}
+    <div
+      ref={scrollRef}
+      className="h-full"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Pull-to-refresh indicator */}
+      {refreshing && (
+        <div className="flex justify-center py-3">
+          <div className="w-5 h-5 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
         </div>
-      ) : filtered.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-[#6B6B6B] text-sm">
-            No destinations found for "{searchQuery}"
-          </p>
-        </div>
-      ) : (
-        <div className="space-y-2">
-          {filtered.map((country) => (
+      )}
+
+      <div className="px-4 pt-4">
+        {/* Header: Greeting + Balance + Bell (logged in) */}
+        {user && (
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="text-[12px] text-[#6B6B6B]">Welcome back</p>
+              <h1 className="text-[20px] font-semibold text-[#1A1A1A] tracking-tight">
+                Hi {firstName}
+              </h1>
+            </div>
+            <div className="flex items-center gap-3">
+              {/* Balance pill */}
+              <button
+                onClick={() => navigate("/app/profile")}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full shadow-sm border border-[#F3F3F3]"
+              >
+                <span className="text-[13px]">💰</span>
+                <span className="text-[13px] font-semibold text-[#1A1A1A]">
+                  {formatPrice(balance)}
+                </span>
+              </button>
+              {/* Notification bell */}
+              <button
+                onClick={() => navigate("/app/profile")}
+                className="w-9 h-9 flex items-center justify-center bg-white rounded-full shadow-sm border border-[#F3F3F3]"
+              >
+                <Bell className="w-[18px] h-[18px] text-[#6B6B6B]" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Anonymous header */}
+        {!user && (
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-[20px] font-bold text-[#1A1A1A] tracking-tight">
+              Mobile11
+            </h1>
+          </div>
+        )}
+
+        {/* Search bar (tap to open sheet) */}
+        <button
+          onClick={() => setShowSearch(true)}
+          className="w-full flex items-center gap-3 h-12 pl-4 pr-4 bg-white rounded-2xl shadow-sm mb-5"
+        >
+          <Search className="w-[18px] h-[18px] text-[#9CA3AF]" />
+          <span className="text-[15px] text-[#9CA3AF]">
+            Where do you need an eSIM?
+          </span>
+        </button>
+
+        {/* Promo Carousel */}
+        <PromoCarousel />
+
+        {/* Tab strip */}
+        <div className="flex gap-0 border-b border-[#E5E5E5] mt-5 mb-4 sticky top-0 bg-[#FAF7F2] z-10">
+          {tabs.map((tab) => (
             <button
-              key={country.country_code}
-              onClick={() => handleCountryTap(country)}
-              className="w-full flex items-center gap-3.5 px-4 py-3.5 bg-white rounded-2xl shadow-sm active:scale-[0.98] transition-transform"
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-1 pb-2.5 text-[14px] font-medium transition-colors relative ${
+                activeTab === tab.id ? "text-[#1A1A1A]" : "text-[#6B6B6B]"
+              }`}
             >
-              <FlagRect iso={country.country_code.toLowerCase()} size="md" />
-              <span className="flex-1 text-left text-[15px] font-medium text-[#1A1A1A]">
-                {country.country_name}
-              </span>
-              <span className="text-[13px] text-[#6B6B6B]">
-                from {formatPrice(country.cheapest_price)}
-              </span>
-              <ChevronRight className="w-4 h-4 text-[#9CA3AF]" />
+              {tab.label}
+              {activeTab === tab.id && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#F97316] rounded-full" />
+              )}
             </button>
           ))}
         </div>
-      )}
 
-      {/* Floating "Help me choose" CTA */}
-      <button
-        onClick={() => setShowGuided(true)}
-        className="fixed bottom-24 right-4 z-40 flex items-center gap-2 px-5 py-3 bg-[#F97316] text-white rounded-full shadow-lg shadow-orange-200 active:scale-95 transition-transform"
-      >
-        <Sparkles className="w-4 h-4" />
-        <span className="text-[14px] font-semibold">Help me choose</span>
-      </button>
+        {/* Destination list */}
+        {isLoading ? (
+          <div className="space-y-2.5">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="h-[56px] bg-white rounded-2xl animate-pulse"
+              />
+            ))}
+          </div>
+        ) : currentList.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-[#6B6B6B] text-sm">No destinations found</p>
+          </div>
+        ) : (
+          <div className="space-y-2 pb-4">
+            {currentList.map((row) => (
+              <button
+                key={row.id}
+                onClick={() => handleRowTap(row)}
+                className="w-full flex items-center gap-3.5 px-4 py-3 bg-white rounded-2xl shadow-sm active:scale-[0.98] transition-transform"
+              >
+                {/* Flag or Globe */}
+                {row.isMultiCountry ? (
+                  <div className="w-[28px] h-[21px] flex items-center justify-center bg-[#F3F3F3] rounded-sm">
+                    <Globe className="w-4 h-4 text-[#6B6B6B]" />
+                  </div>
+                ) : (
+                  <FlagRect iso={row.country_code.toLowerCase()} size="md" />
+                )}
+                {/* Name + subtitle */}
+                <div className="flex-1 text-left min-w-0">
+                  <p className="text-[15px] font-medium text-[#1A1A1A] truncate">
+                    {row.name}
+                  </p>
+                  {row.subtitle && (
+                    <p className="text-[12px] text-[#6B6B6B] mt-0.5">
+                      {row.subtitle}
+                    </p>
+                  )}
+                </div>
+                {/* Price */}
+                <span className="text-[14px] font-bold text-[#1A1A1A] whitespace-nowrap">
+                  {activeTab === "popular"
+                    ? formatPrice(row.price)
+                    : `from ${formatPrice(row.price)}`}
+                </span>
+                <ChevronRight className="w-4 h-4 text-[#9CA3AF] flex-shrink-0" />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
-      {/* Guided Flow Sheet */}
-      {showGuided && (
-        <GuidedFlowSheet onClose={() => setShowGuided(false)} />
-      )}
+      {/* Search Sheet */}
+      {showSearch && <SearchSheet onClose={() => setShowSearch(false)} />}
     </div>
   );
 }
