@@ -6,18 +6,20 @@ import {
   CreditCard, 
   Gift, 
   Package, 
-  Briefcase
+  Briefcase,
+  Inbox
 } from 'lucide-react';
 import { ProfileSection } from './ProfileLayout';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useIsMobileApp } from '@/hooks/useIsMobileApp';
 
 interface ProfileSidebarProps {
   activeSection: ProfileSection;
   onSectionChange: (section: ProfileSection) => void;
 }
 
-const menuItems: { id: ProfileSection; labelKey: string; icon: React.ElementType }[] = [
+const menuItems: { id: ProfileSection; labelKey: string; icon: React.ElementType; mobileOnly?: boolean }[] = [
   { id: 'account', labelKey: 'profile.sidebar.account', icon: User },
   { id: 'devices', labelKey: 'profile.sidebar.devices', icon: Monitor },
   { id: 'loyalty', labelKey: 'profile.sidebar.loyalty', icon: Coins },
@@ -25,6 +27,7 @@ const menuItems: { id: ProfileSection; labelKey: string; icon: React.ElementType
   { id: 'referrals', labelKey: 'profile.sidebar.referrals', icon: Gift },
   { id: 'orders', labelKey: 'profile.sidebar.orders', icon: Package },
   { id: 'business', labelKey: 'profile.sidebar.business', icon: Briefcase },
+  { id: 'inbox', labelKey: 'profile.sidebar.inbox', icon: Inbox, mobileOnly: true },
 ];
 
 export const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ 
@@ -32,13 +35,19 @@ export const ProfileSidebar: React.FC<ProfileSidebarProps> = ({
   onSectionChange 
 }) => {
   const { t } = useLanguage();
+  const isMobile = useIsMobileApp();
+
+  const visibleItems = isMobile
+    ? menuItems
+    : menuItems.filter((item) => !item.mobileOnly);
 
   return (
     <nav className="bg-white rounded-2xl shadow-sm overflow-hidden">
       <ul className="divide-y divide-gray-100">
-        {menuItems.map((item) => {
+        {visibleItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeSection === item.id;
+          const label = item.id === 'inbox' ? 'Inbox' : t(item.labelKey);
           
           return (
             <li key={item.id}>
@@ -67,7 +76,7 @@ export const ProfileSidebar: React.FC<ProfileSidebarProps> = ({
                     isActive ? "text-gray-900" : "text-gray-600"
                   )}
                 >
-                  {t(item.labelKey)}
+                  {label}
                 </span>
               </button>
             </li>

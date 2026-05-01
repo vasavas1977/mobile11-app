@@ -15,6 +15,10 @@ import { ReferAndEarnSection } from './sections/ReferAndEarnSection';
 import { OrdersSection } from './sections/OrdersSection';
 import { BusinessSection } from './sections/BusinessSection';
 import { OrderDetailSection } from './sections/OrderDetailSection';
+import { useIsMobileApp } from '@/hooks/useIsMobileApp';
+import { MobileLoyaltyScreen } from '@/components/native/menu/MobileLoyaltyScreen';
+import { MobileReferralScreen } from '@/components/native/menu/MobileReferralScreen';
+import { MobileInboxScreen } from '@/components/native/menu/MobileInboxScreen';
 
 export type ProfileSection = 
   | 'account' 
@@ -24,7 +28,8 @@ export type ProfileSection =
   | 'referrals' 
   | 'orders' 
   | 'order-detail'
-  | 'business';
+  | 'business'
+  | 'inbox';
 
 interface ProfileLayoutProps {
   initialSection?: ProfileSection;
@@ -34,6 +39,7 @@ export const ProfileLayout: React.FC<ProfileLayoutProps> = ({ initialSection = '
   const [activeSection, setActiveSection] = useState<ProfileSection>(initialSection);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const { user } = useAuth();
+  const isMobile = useIsMobileApp();
 
   // Sync activeSection when initialSection changes (e.g., URL param changes)
   useEffect(() => {
@@ -43,6 +49,13 @@ export const ProfileLayout: React.FC<ProfileLayoutProps> = ({ initialSection = '
       setSelectedOrderId(null);
     }
   }, [initialSection]);
+
+  // Mobile short-circuit: render mobile-specific screens
+  if (isMobile) {
+    if (activeSection === 'loyalty') return <MobileLoyaltyScreen />;
+    if (activeSection === 'referrals') return <MobileReferralScreen />;
+    if (activeSection === 'inbox') return <MobileInboxScreen />;
+  }
 
   const handleSelectOrder = (orderId: string) => {
     setSelectedOrderId(orderId);
@@ -159,6 +172,7 @@ export const ProfileLayout: React.FC<ProfileLayoutProps> = ({ initialSection = '
                   'orders': 'Orders',
                   'order-detail': 'Order details',
                   'business': 'Mobile11 for Business',
+                  'inbox': 'Inbox',
                 }[activeSection]
               }
             </p>
