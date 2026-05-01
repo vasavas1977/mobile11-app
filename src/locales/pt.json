@@ -1740,12 +1740,7 @@
     "signingIn": "Entrando...",
     "creatingAccount": "Creating Conta...",
     "forgotPassword": "Esqueceu a senha?",
-    "resetPassword": {
-      "title": "Redefinir Senha",
-      "submit": "Enviar",
-      "success": "Link de redefinição enviado",
-      "back": "Voltar"
-    },
+    "resetPassword": "Redefinir Senha",
     "resetPasswordDesc": "Digite seu e-mail para receber um link de redefinição de senha",
     "sendResetLink": "Enviar Redefinir Link",
     "sending": "Enviaring...",
@@ -1798,22 +1793,6 @@
       "consentCheckbox": "Concordo com a forma como o mobile11 usa meu endereço de e-mail",
       "agreeButton": "I Agree & Continuar",
       "accept": "Aceitar"
-    },
-    "login": {
-      "title": "Bem-vindo de volta",
-      "subtitle": "Faça login para gerenciar seus eSIMs",
-      "emailLabel": "E-mail",
-      "passwordLabel": "Senha",
-      "forgotPassword": "Esqueceu a senha?",
-      "submitButton": "Entrar",
-      "noAccount": "Não tem uma conta?",
-      "signUpLink": "Cadastrar-se"
-    },
-    "register": {
-      "title": "Criar conta",
-      "submitButton": "Criar conta",
-      "hasAccount": "Já tem uma conta?",
-      "signInLink": "Entrar"
     }
   },
   "dashboard": {

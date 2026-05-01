@@ -1761,22 +1761,6 @@
       "termsLink": "شروط الخدمة",
       "consentCheckbox": "أوافق على كيفية استخدام mobile11 لعنوان بريدي الإلكتروني",
       "agreeButton": "أوافق وأُتابع"
-    },
-    "login": {
-      "title": "مرحبًا بعودتك",
-      "subtitle": "سجل الدخول لإدارة شرائح eSIM الخاصة بك",
-      "emailLabel": "البريد الإلكتروني",
-      "passwordLabel": "كلمة المرور",
-      "forgotPassword": "هل نسيت كلمة المرور؟",
-      "submitButton": "تسجيل الدخول",
-      "noAccount": "ليس لديك حساب؟",
-      "signUpLink": "إنشاء حساب"
-    },
-    "register": {
-      "title": "إنشاء حساب",
-      "submitButton": "إنشاء حساب",
-      "hasAccount": "لديك حساب بالفعل؟",
-      "signInLink": "تسجيل الدخول"
     }
   },
   "dashboard": {

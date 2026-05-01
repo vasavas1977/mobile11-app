@@ -1736,12 +1736,7 @@
     "signingIn": "Iniciando sesión...",
     "creatingAccount": "Creating Cuenta...",
     "forgotPassword": "¿Olvidó su contraseña?",
-    "resetPassword": {
-      "title": "Restablecer Contraseña",
-      "submit": "Enviar",
-      "success": "Se envió enlace de restablecimiento",
-      "back": "Volver"
-    },
+    "resetPassword": "Restablecer Contraseña",
     "resetPasswordDesc": "Ingrese su correo para recibir un enlace de restablecimiento de contraseña",
     "sendResetLink": "Enviar Restablecer Link",
     "sending": "Enviaring...",
@@ -1794,23 +1789,6 @@
       "consentCheckbox": "Acepto cómo mobile11 usa mi dirección de correo",
       "agreeButton": "I Agree & Continuar",
       "accept": "Aceptar"
-    },
-    "login": {
-      "title": "Bienvenido de nuevo",
-      "subtitle": "Inicie sesión para gestionar sus eSIMs",
-      "emailLabel": "Correo electrónico",
-      "passwordLabel": "Contraseña",
-      "forgotPassword": "¿Olvidó su contraseña?",
-      "submitButton": "Iniciar sesión",
-      "noAccount": "¿No tiene una cuenta?",
-      "signUpLink": "Registrarse"
-    },
-    "register": {
-      "title": "Crear cuenta",
-      "subtitle": "Regístrese para comenzar con su eSIM",
-      "submitButton": "Crear cuenta",
-      "hasAccount": "¿Ya tiene una cuenta?",
-      "signInLink": "Iniciar sesión"
     }
   },
   "dashboard": {
