@@ -1,7 +1,7 @@
 {
-  "name": "esim-installer",
+  "name": "@mobile11/capacitor-esim-installer",
   "version": "1.0.0",
-  "description": "Capacitor plugin for zero-QR eSIM installation on iOS and Android",
+  "description": "Capacitor plugin for one-tap eSIM installation on Android via EuiccManager (Phase 1: system resolution UI)",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -12,6 +12,21 @@
     "dist/",
     "ios/Plugin/",
     "EsimInstaller.podspec"
+  ],
+  "author": "1-TO-ALL Co., Ltd.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vasavas1977/mobile11-app.git",
+    "directory": "native-plugins/esim-installer"
+  },
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native",
+    "esim",
+    "euicc",
+    "android"
   ],
   "capacitor": {
     "ios": {
@@ -26,10 +41,10 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "@capacitor/core": "^6.0.0"
+    "@capacitor/core": ">=6.0.0"
   },
   "devDependencies": {
-    "@capacitor/core": "^6.0.0",
+    "@capacitor/core": "^8.0.0",
     "typescript": "^5.5.0"
   }
 }

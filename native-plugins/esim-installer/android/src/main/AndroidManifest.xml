@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Request eSIM write permission (system-level on most OEMs,
-         but the resolution intent works without it on most devices) -->
-    <uses-permission android:name="android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS" />
+    <!-- Phase 1: No additional permissions required.
+         EuiccManager.downloadSubscription with the resolvable-error path
+         does not require WRITE_EMBEDDED_SUBSCRIPTIONS on non-system apps.
+         Phase 2 (BF76 carrier privilege / silent install) will add
+         WRITE_EMBEDDED_SUBSCRIPTIONS when SM-DP+ metadata coordination is complete. -->
 </manifest>
